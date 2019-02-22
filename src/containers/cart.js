@@ -5,6 +5,10 @@ class Cart extends React.Component{
     render(){
 
         const {cartItems} = this.props;
+        if(!cartItems || cartItems.length <= 0){
+            return <p> Nothing in the cart.</p>
+        }
+
         return(
             <table>
                 <tbody>

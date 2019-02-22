@@ -1,6 +1,7 @@
 import React from 'react';
 import Product from '../components/product';
 import { getProducts } from '../services/product-service';
+import { connect } from 'react-redux';
 
 class ProductList extends React.Component{
     
@@ -17,15 +18,19 @@ class ProductList extends React.Component{
     }
 
     render(){        
-        const {pList, onAddItem} = this.state;
+        const {pList, onAddItem } = this.state;
+        const {history} = this.props;
         return(
             <div>
                {
-                    pList.map((prod)=><Product pData = {prod} key={prod.productId} currencyCode = {this.props.currencyCode} onAddItem = {(pr) => this.props.onAddItem(pr)}></Product>)
+                    pList.map((prod)=><Product pData = {prod} key={prod.productId} currencyCode = {this.props.currencyCode} onAddItem = {(pr) => history.push('/cart')}></Product>)
                }
             </div>
         );
     }
 }
 
-export default ProductList;
+const mapStateToProps = (state) => ({
+    currencyCode : state
+})
+export default connect(mapStateToProps)(ProductList);

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import  queryString from 'query-string';
 export class InputForm extends React.Component{
     
     nameTxtBox = null;
@@ -10,6 +10,13 @@ export class InputForm extends React.Component{
         e.preventDefault();
         console.log('form submitted');
         console.log("name",this.nameTxtBox.value);
+    }
+
+    componentDidMount(){
+        console.log("rest param ", this.props.match.params);
+        const data = this.props.location.search;
+        const parsed = queryString.parse(data);
+        console.log('query string', parsed);
     }
     render(){  
         return(

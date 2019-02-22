@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ProductList from './containers/productlist';
 import Currency from './components/currency';
@@ -7,6 +6,10 @@ import Cart from './containers/cart';
 import Product from './components/product';
 import ErrorBoundary from './components/error-boundary';
 import InputForm from './components/form';
+
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
+import Demo from './demo';
+import ErrorPage from './components/error-page';
 
 class App extends Component {
   
@@ -21,7 +24,25 @@ class App extends Component {
   }
   render() {
     return (
-     <ErrorBoundary>   
+
+      <Router>
+        <div>
+          <Currency onCode={(code)=> this.setState({currencyCode : code})}></Currency>
+          <nav>
+            <Link to = "/" >Home</Link>
+            <Link to = "/products">Products</Link>
+            <Link to = "/cart">Cart</Link>
+          </nav>
+          <Switch>
+              <Route exact path = "/" component = {Demo}></Route>
+              <Route path="/products" component = {ProductList}></Route>
+              <Route path = "/cart" component = {Cart}></Route>
+              <Route path = "/forms/:id" component = {InputForm}></Route>
+              <Route component = {ErrorPage}></Route>
+          </Switch>
+        </div>
+      </Router>
+     /*<ErrorBoundary>   
 
         <div className="App">
         <InputForm></InputForm>
@@ -30,7 +51,7 @@ class App extends Component {
         onAddItem = { prod => this.addItemToCart(prod)}></ProductList>
         <Cart cartItems={this.state.cartItems}></Cart>
       </div>
-     </ErrorBoundary>
+     </ErrorBoundary>*/
     );
   }
 }
