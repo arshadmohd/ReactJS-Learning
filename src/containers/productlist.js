@@ -2,6 +2,7 @@ import React from 'react';
 import Product from '../components/product';
 import { getProducts } from '../services/product-service';
 import { connect } from 'react-redux';
+import { addProductToCart } from '../_store/actions/cart-action';
 
 class ProductList extends React.Component{
     
@@ -19,11 +20,14 @@ class ProductList extends React.Component{
 
     render(){        
         const {pList, onAddItem } = this.state;
-        const {history} = this.props;
+        const {history, addProductToCart} = this.props;
         return(
             <div>
                {
-                    pList.map((prod)=><Product pData = {prod} key={prod.productId} currencyCode = {this.props.currencyCode} onAddItem = {(pr) => history.push('/cart')}></Product>)
+                    pList.map((prod)=><Product pData = {prod} key={prod.productId} currencyCode = {this.props.currencyCode} onAddItem = {(pr) => {
+                        addProductToCart(pr);
+                        history.push('/cart');
+                    }}></Product>)
                }
             </div>
         );
@@ -31,6 +35,9 @@ class ProductList extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-    currencyCode : state
+    currencyCode : state.code
 })
-export default connect(mapStateToProps)(ProductList);
+const mapDispatcherToProps = (dispatch) => ({
+    addProductToCart : (product) => dispatch(addProductToCart(product))
+})
+export default connect(mapStateToProps, mapDispatcherToProps)(ProductList);

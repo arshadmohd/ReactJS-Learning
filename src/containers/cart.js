@@ -1,5 +1,6 @@
 import React from 'react';
 import CartItem from '../components/cart-item';
+import { connect } from 'react-redux';
 
 class Cart extends React.Component{
     render(){
@@ -28,4 +29,8 @@ class Cart extends React.Component{
     }
 }
 
-export default Cart;
+
+const mapStateToProps = (state) => ({
+    cartItems : state.cart
+})
+export default connect(mapStateToProps)(Cart);

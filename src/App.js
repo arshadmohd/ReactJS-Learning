@@ -10,6 +10,8 @@ import InputForm from './components/form';
 import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import Demo from './demo';
 import ErrorPage from './components/error-page';
+import { connect } from 'react-redux';
+import {changeCurrency} from './_store/actions/currency-actions';
 
 class App extends Component {
   
@@ -27,7 +29,7 @@ class App extends Component {
 
       <Router>
         <div>
-          <Currency onCode={(code)=> this.setState({currencyCode : code})}></Currency>
+          <Currency onCode={(code)=> this.props.changeCurrency(code)}></Currency>
           <nav>
             <Link to = "/" >Home</Link>
             <Link to = "/products">Products</Link>
@@ -55,5 +57,7 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+const mapDispatchToProps = (dispatch) => ({
+  changeCurrency : (code) => dispatch(changeCurrency(code))
+})
+export default connect(null, mapDispatchToProps)(App);
