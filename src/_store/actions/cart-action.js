@@ -12,5 +12,5 @@ const removeFromCart = (id) => ({
     type : REMOVE_FROM_CART,
     id
 })
-
+//This is just to check export
 export { addProductToCart, ADD_TO_CART, REMOVE_FROM_CART} ;
